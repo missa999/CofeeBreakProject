@@ -9,7 +9,7 @@ public class StandardCalculation implements CartCalculationStrategy {
 	@Override
     public double calculateTotal(CartDAO cart) {
         return cart.getOrders().stream()
-                   .mapToDouble(order -> order.getPrice() * order.getQuantity()) // Correction : 'Order' devient 'order'
+                   .mapToDouble(order -> order.getPrice() * order.getQuantity())
                    .sum();
     }
 }

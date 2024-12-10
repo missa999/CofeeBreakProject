@@ -19,15 +19,12 @@ public class UsersServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         UserDao userDao = new UserDao();
-        // Authentification de l'utilisateur et récupération du rôle
         boolean isAuthenticated = userDao.authenticateUser(email, password);
         int id_user=userDao.getUserId(email, password);
         
         if (isAuthenticated) {
-            // Récupérer le rôle de l'utilisateur (true = admin, false = utilisateur normal)
             boolean isAdmin = userDao.isAdmin(email);
 
-            // Créer la session et y ajouter l'email de l'utilisateur
             HttpSession session = request.getSession();
             session.setAttribute("email", email);
             
@@ -35,14 +32,12 @@ public class UsersServlet extends HttpServlet {
             
             session.setAttribute("id_user", id_user);
             
-            // Vérifier si l'utilisateur est un administrateur ou non et rediriger
             if (isAdmin) {
-                response.sendRedirect("user/home.jsp"); // Page d'accueil pour l'admin
+                response.sendRedirect("user/home.jsp");
             } else {
-                response.sendRedirect("MenuServlet"); // Redirige vers la servlet MenuServlet
+                response.sendRedirect("MenuServlet");
             }
         } else {
-            // Si l'authentification échoue, afficher un message d'erreur
             request.setAttribute("errorMessage", "Invalid username or password.");
             request.getRequestDispatcher("user/login.jsp").forward(request, response);
         }

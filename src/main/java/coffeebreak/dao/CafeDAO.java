@@ -44,9 +44,8 @@ public class CafeDAO implements Product {
             pstmt.setString(1, cafe.getNomCafe());
             pstmt.setFloat(2, cafe.getPrix());
             pstmt.setInt(3, cafe.getVentes());
-            pstmt.setString(4, cafe.getImageUrl()); // Save the image URL
+            pstmt.setString(4, cafe.getImageUrl());
             pstmt.executeUpdate();
-            System.out.println("Café inséré : " + cafe.getNomCafe());
         }
     }
 
@@ -65,7 +64,7 @@ public class CafeDAO implements Product {
                 rs.getString("NOM_CAFE"),
                 rs.getFloat("PRIX"),
                 rs.getInt("VENTES"),
-                rs.getString("IMAGE_URL") // Retrieve the image URL
+                rs.getString("IMAGE_URL")
             );
         }
         return null;
@@ -80,7 +79,6 @@ public class CafeDAO implements Product {
             pstmt.setInt(1, newSales);
             pstmt.setInt(2, foId);
             pstmt.executeUpdate();
-            System.out.println("Ventes mises à jour pour le café avec ID : " + foId);
     }
 
     @Override
@@ -93,11 +91,10 @@ public class CafeDAO implements Product {
             pstmt.setString(1, cafe.getNomCafe());
             pstmt.setFloat(2, cafe.getPrix());
             pstmt.setInt(3, cafe.getVentes());
-            pstmt.setInt(4, cafe.getId());  // Use the ID of the cafe to identify the record to update
+            pstmt.setInt(4, cafe.getId());
 
             int rowsUpdated = pstmt.executeUpdate();
             if (rowsUpdated > 0) {
-                System.out.println("Café mis à jour : " + cafe.getNomCafe());
             } else {
                 System.out.println("Aucun café trouvé avec l'ID : " + cafe.getId());
             }
@@ -114,7 +111,6 @@ public class CafeDAO implements Product {
         int rowsAffected = pstmt.executeUpdate();
 
         if (rowsAffected > 0) {
-            System.out.println("Café supprimé avec succès : " + id);
             return true;
         } else {
             System.out.println("Erreur lors de la suppression du café avec ID : " + id);
@@ -131,7 +127,7 @@ public class CafeDAO implements Product {
         ResultSet rs = null;
         
         try {
-            conn = DriverManager.getConnection(URL, USER, PASSWORD); // Open connection
+            conn = DriverManager.getConnection(URL, USER, PASSWORD);
             String sql = "SELECT * FROM cafeS";
             stmt = conn.prepareStatement(sql);
             rs = stmt.executeQuery();

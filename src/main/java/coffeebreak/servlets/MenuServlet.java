@@ -27,28 +27,18 @@ public class MenuServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            // Get DAO instances for Cafe and Vinoiserie
             Product productDAO = ProductFactory.getProductDAO("cafe");
             Product productDAOV = ProductFactory.getProductDAO("vinoiserie");
 
-            // Get the list of products
             List<?> products = productDAO.getAllProducts();
             List<?> productsV = productDAOV.getAllProducts();
 
-            // Log the product lists for debugging
-            System.out.println("Cafe products: " + products);
-            System.out.println("Vinoiserie products: " + productsV);
-
-            // Set the products in the request scope for the JSP to access
             request.setAttribute("products", products);
             request.setAttribute("productsV", productsV);
 
-            // Forward the request to the menu.jsp page
             request.getRequestDispatcher("product.jsp").forward(request, response);
         } catch (SQLException e) {
             e.printStackTrace();
-            // Optionally send an error response in case of an issue
-            // response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 

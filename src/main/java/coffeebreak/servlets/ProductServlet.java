@@ -91,9 +91,9 @@ import coffeebreak.models.Vinoiserie;
 
 @WebServlet("/ProductServlet")
 @MultipartConfig(
-	    fileSizeThreshold = 1024 * 1024 * 2, // 2 MB
-	    maxFileSize = 1024 * 1024 * 10,      // 10 MB
-	    maxRequestSize = 1024 * 1024 * 50    // 50 MB
+	    fileSizeThreshold = 1024 * 1024 * 2,
+	    maxFileSize = 1024 * 1024 * 10,     
+	    maxRequestSize = 1024 * 1024 * 50
 	)
 public class ProductServlet extends HttpServlet {
 	@Override
@@ -111,7 +111,7 @@ public class ProductServlet extends HttpServlet {
 
 	        } else if ("details".equals(action)) {
 	            int id = Integer.parseInt(request.getParameter("id"));
-	            Object product = productDAO.getProductDetails(id); // Add `getProductDetails` method in DAO if not present
+	            Object product = productDAO.getProductDetails(id);
 	            request.setAttribute("product", product);
 	            request.setAttribute("productType", productType);
 	            request.getRequestDispatcher("detail.jsp").forward(request, response);
@@ -143,12 +143,11 @@ public class ProductServlet extends HttpServlet {
             	String filePath = uploadsDir + File.separator + fileName;
 
             	try {
-            	    filePart.write(filePath); // Save the file temporarily
+            	    filePart.write(filePath);
             	} catch (IOException e) {
             	    throw new ServletException("Error saving the uploaded file", e);
             	}
 
-            	// Then upload to Cloudinary
             	String imageUrl = CloudinaryUtil.uploadImage(filePath);
 
                 if ("cafe".equalsIgnoreCase(productType)) {
@@ -158,8 +157,9 @@ public class ProductServlet extends HttpServlet {
                             Integer.parseInt(request.getParameter("sales")),
                             imageUrl
                     );
+                    cafe.notifyObservers("A new coffee has been added: " + request.getParameter("name"));
                     productDAO.insertProduct(cafe);
-                    request.setAttribute("message", "Café ajouté avec succès!");
+                    request.setAttribute("message", "Coffee added successfully!");
                 } else if ("vinoiserie".equalsIgnoreCase(productType)) {
                     Vinoiserie vinoiserie = new Vinoiserie(
                             request.getParameter("name"),
@@ -167,11 +167,11 @@ public class ProductServlet extends HttpServlet {
                             Integer.parseInt(request.getParameter("sales")),
                             imageUrl
                     );
+                    vinoiserie.notifyObservers("A new pastries has been added: " + request.getParameter("name"));
                     productDAO.insertProduct(vinoiserie);
-                    request.setAttribute("message", "Vinoiserie ajoutée avec succès!");
+                    request.setAttribute("message", "Pastries added successfully!");
                 }
             } else if ("update".equals(action)) {
-                // Update product
                 int id = Integer.parseInt(request.getParameter("id"));
                 String name = request.getParameter("name");
                 float price = Float.parseFloat(request.getParameter("price"));
@@ -180,11 +180,11 @@ public class ProductServlet extends HttpServlet {
                 if ("cafe".equals(productType)) {
                     Cafe cafe = new Cafe(id, name, price, sales);
                     productDAO.updateProduct(cafe);
-                    request.setAttribute("message", "Café mis à jour avec succès!");
+                    request.setAttribute("message", "Coffee updated successfully!");
                 } else if ("vinoiserie".equals(productType)) {
                     Vinoiserie vinoiserie = new Vinoiserie(id, name, price, sales);
                     productDAO.updateProduct(vinoiserie);
-                    request.setAttribute("message", "Vinoiserie mise à jour avec succès!");
+                    request.setAttribute("message", "Pastries updated successfully!");
                 }
             } else if ("delete".equals(action)) {
                 // Delete product
@@ -192,9 +192,9 @@ public class ProductServlet extends HttpServlet {
                 boolean isDeleted = productDAO.deleteProduct(id);
                 if (isDeleted) {
                 	if ("cafe".equals(productType)) {
-                		request.setAttribute("message", "Café supprimé avec succès!");
+                		request.setAttribute("message", "Coffee deleted successfully!");
                     } else if ("vinoiserie".equals(productType)) {
-                    	request.setAttribute("message", "Vinoiserie supprimé avec succès!");
+                    	request.setAttribute("message", "Pastries deleted successfully!");
                     }
 
                 } else {
@@ -202,7 +202,6 @@ public class ProductServlet extends HttpServlet {
                 }
             }
 
-            // Forward the request to list.jsp instead of redirecting
             request.setAttribute("productType", productType);
             List<?> products = productDAO.getAllProducts();
             request.setAttribute("products", products);

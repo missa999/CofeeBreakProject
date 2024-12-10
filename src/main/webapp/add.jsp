@@ -7,7 +7,6 @@
     <title>Add Product</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        // JavaScript to preview the selected image
         function previewImage(event) {
             const file = event.target.files[0];
             const reader = new FileReader();
@@ -15,7 +14,7 @@
             reader.onload = function() {
                 const preview = document.getElementById('imagePreview');
                 preview.src = reader.result;
-                preview.style.display = 'block';  // Show the image after it's loaded
+                preview.style.display = 'block';
             };
             
             if (file) {
@@ -29,30 +28,29 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <div class="flex-shrink-0">
-                    <a class="text-2xl font-bold text-blue-500">CoffeeBreak</a>
+                    <a href="user/home.jsp" class="text-2xl font-bold text-amber-700">CoffeeBreak</a>
                 </div>
-
+    
                 <div class="hidden md:flex space-x-6">
                     <a href="/coffeebreak/ProductServlet?action=list&productType=cafe" 
                        class="text-gray-700 hover:text-blue-500 transition">
-                        Cafes
+                        Coffees
                     </a>
                     <a href="/coffeebreak/ProductServlet?action=list&productType=vinoiserie" 
                        class="text-gray-700 hover:text-green-500 transition">
-                        Vinoiseries
+                        Pastries
                     </a>
                 </div>
-
+    
                 <div class="hidden md:flex items-center space-x-4">
                     <a href="user/logout.jsp" 
                        class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition">
                         Logout
                     </a>
                 </div>
-
+    
             </div>
         </div>
-
     </nav>
 
     <div class="min-h-screen flex items-center justify-center py-8">
@@ -70,7 +68,6 @@
                                onchange="previewImage(event)">
                     </div>
 
-                    <!-- Image Preview -->
                     <div class="mt-4 text-center">
                         <img id="imagePreview" src="" alt="Image Preview" class="w-full h-auto rounded-md shadow-md hidden" />
                     </div>
@@ -95,7 +92,7 @@
 
                     <div class="text-center">
                         <button type="submit"
-                                class="w-full bg-blue-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                                class="w-full bg-gradient-to-r from-amber-700 to-amber-800 hover:from-amber-900 hover:to-amber-700 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
                             Add Product
                         </button>
                     </div>

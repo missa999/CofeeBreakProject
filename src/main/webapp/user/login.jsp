@@ -39,14 +39,14 @@
         </div>
 
         <button type="submit" 
-            class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition">
+            class="w-full bg-gradient-to-r from-amber-700 to-amber-800 hover:from-amber-900 hover:to-amber-700 text-white font-bold py-2 rounded hover:bg-blue-600 transition">
             Login
         </button>
     </form>
 
     <p class="mt-4 text-center text-sm text-gray-600">
         Don't have an account? 
-        <a href="register.jsp" class="text-blue-500 hover:underline">Register here</a>.
+        <a href="register.jsp" class="text-amber-500 hover:underline">Register here</a>.
     </p>
 </div>
 

@@ -30,17 +30,17 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <div class="flex-shrink-0">
-                    <a class="text-2xl font-bold text-blue-500">CoffeeBreak</a>
+                    <a href="user/home.jsp" class="text-2xl font-bold text-amber-700">CoffeeBreak</a>
                 </div>
     
                 <div class="hidden md:flex space-x-6">
                     <a href="/coffeebreak/ProductServlet?action=list&productType=cafe" 
                        class="text-gray-700 hover:text-blue-500 transition">
-                        Cafes
+                        Coffees
                     </a>
                     <a href="/coffeebreak/ProductServlet?action=list&productType=vinoiserie" 
                        class="text-gray-700 hover:text-green-500 transition">
-                        Vinoiseries
+                        Pastries
                     </a>
                 </div>
     
@@ -53,17 +53,15 @@
     
             </div>
         </div>
-    
     </nav>
 
     <div class="max-w-4xl mx-auto bg-white shadow-md rounded px-8 py-6 mt-6">
         <% if ("cafe".equals(productType)) { %>
-            <h1 class="text-2xl font-bold mb-6 text-center">Cafes List</h1>
+            <h1 class="text-2xl font-bold mb-6 text-center">Coffees List</h1>
         <% } else { %>
-            <h1 class="text-2xl font-bold mb-6 text-center">Vinoiseries List</h1>                
+            <h1 class="text-2xl font-bold mb-6 text-center">Pastries List</h1>                
         <% } %>
 
-        <%-- Display message if exists --%>
         <% if (message != null) { %>
             <div class="text-center text-lg font-semibold text-green-500 mb-4">
                 <%= message %>
@@ -72,9 +70,9 @@
 
         <div class="mb-4 text-center float-right">
             <% if ("cafe".equals(productType)) { %>
-                <a href="add.jsp?productType=<%= productType %>" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">Add New Cafe</a>
+                <a href="add.jsp?productType=<%= productType %>"   class="bg-gradient-to-r from-amber-700 to-amber-800 hover:from-amber-900 hover:to-amber-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300" >Add New Coffee</a>
             <% } else { %>
-                <a href="add.jsp?productType=<%= productType %>" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">Add New Vinoiserie</a>
+                <a href="add.jsp?productType=<%= productType %>" class="bg-gradient-to-r from-amber-700 to-amber-800 hover:from-amber-900 hover:to-amber-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300" >Add New Pastries</a>
             <% } %>
         </div>
 

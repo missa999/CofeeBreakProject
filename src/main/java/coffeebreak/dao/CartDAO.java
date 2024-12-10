@@ -44,8 +44,7 @@ public class CartDAO {
 	public void createOrderTable() throws SQLException {
 		String sql = "CREATE TABLE IF NOT EXISTS ORDERS (" + "ID INT AUTO_INCREMENT PRIMARY KEY,"
 				+ "NOM_CAFE VARCHAR(32) NOT NULL," + "QUANTITE INT NOT NULL," + "PRIX_TOTAL FLOAT NOT NULL,"
-				+ "DATE_COMMANDE TIMESTAMP DEFAULT CURRENT_TIMESTAMP," + "ID_USER INT" + // Ajout du champ ID_USER sans
-																							// clé étrangère
+				+ "DATE_COMMANDE TIMESTAMP DEFAULT CURRENT_TIMESTAMP," + "ID_USER INT" +	
 				")";
 
 		Connection conn = DatabaseConfig.getInstance().getConnection();
@@ -68,7 +67,6 @@ public class CartDAO {
 		    PreparedStatement pstmt = null;
 
 		    try {
-		        // Get the connection once
 		        conn = DriverManager.getConnection(URL, USER, PASSWORD);
 		        pstmt = conn.prepareStatement(sql);
 
@@ -78,7 +76,6 @@ public class CartDAO {
 		            pstmt.setDouble(3, order.getSubtotal());
 		            pstmt.setInt(4, id_user);
 		            pstmt.executeUpdate();
-		            System.out.println("Order inserted successfully for: " + order.getProductName());
 		        }
 		    } catch (SQLException e) {
 		        e.printStackTrace();
@@ -87,16 +84,13 @@ public class CartDAO {
 	}
 	
 	public List<Order> ajoutAuPannier(List<Order> orders, Order order) {
-	    // Check if the order already exists in the list based on productName
 	    for (Order existingOrder : orders) {
 	        if (existingOrder.getProductName().equals(order.getProductName())) {
-	            // If order exists, increment its quantity
 	            existingOrder.setQuantity(existingOrder.getQuantity() + order.getQuantity());
 	            return orders;
 	        }
 	    }
 	    
-	    // If order doesn't exist, add it to the list
 	    orders.add(order);
 	    return orders;
 	}

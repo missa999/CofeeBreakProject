@@ -1,12 +1,29 @@
 package coffeebreak.models;
 
-public class Cafe {
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.catalina.User;
+
+import coffeebreak.config.DatabaseConfig;
+import coffeebreak.interfaces.Observer;
+import coffeebreak.interfaces.Subject;
+
+public class Cafe implements Subject {
 	private int id;
     private String nomCafe;
     private float prix;
     private int ventes;
-    private String imageUrl; // New field
+    private String imageUrl;
+    private List<Observer> observers = new ArrayList<>();
 
+    public Cafe(String name) {
+        this.nomCafe = name;
+    }
+    
     public Cafe(int id, String nomCafe, float prix, int ventes, String imageUrl) {
         this.id = id;
         this.nomCafe = nomCafe;
@@ -77,6 +94,36 @@ public class Cafe {
     @Override
     public String toString() {
         return "Cafe [nomCafe=" + nomCafe + ", id=" + id + ", prix=" + prix + ", ventes=" + ventes + ", imageUrl=" + imageUrl + "]";
+    }
+    
+    
+    @Override
+    public void attach(Observer observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void detach(Observer observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers(String message) {
+        try {
+            Connection connection = DatabaseConfig.getInstance().getConnection();
+            PreparedStatement ps = connection.prepareStatement("SELECT email FROM users");
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                attach(new coffeebreak.models.User(rs.getString("email")));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        for (Observer observer : observers) {
+            observer.update(message);
+        }
     }
 
 }

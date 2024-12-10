@@ -19,25 +19,38 @@
 </head>
 
 <body class="bg-gray-50">
-	<header class="bg-gray-800 text-white p-4 w-full">
-		<nav class="flex justify-between items-center container mx-auto">
-			<a href="index.jsp" class="text-2xl font-bold">CoffeeBreak</a>
-			<div class="space-x-6">
-				<!-- Home link -->
-				<a href="MenuServlet" class="hover:text-gray-400">Home</a>
-				<!-- Cart link -->
-				<a href="CartServlet" class="hover:text-gray-400">Cart</a>
-				<!-- Logout link -->
-				<a href="user/logout.jsp" class="hover:text-gray-400">Logout</a>
-			</div>
-		</nav>
-	</header>
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0">
+                    <a href="MenuServlet" class="text-2xl font-bold text-amber-700">CoffeeBreak</a>
+                </div>
+    
+                <div class="hidden md:flex space-x-6">
+                    <a href="MenuServlet" 
+                       class="text-gray-700 hover:text-blue-500 transition">
+                        Menu
+                    </a>
+                    <a href="CartServlet" 
+                       class="text-gray-700 hover:text-green-500 transition">
+                        Cart
+                    </a>
+                </div>
+    
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="user/logout.jsp" 
+                       class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition">
+                        Logout
+                    </a>
+                </div>
+    
+            </div>
+        </div>
+    </nav>
 	
-	<!-- Main content -->
 	<div class="container mx-auto mt-8">
 		<h1 class="text-4xl font-bold mb-6 text-gray-800 text-center">Shopping Cart</h1>
 
-		<!-- Cart Table -->
 		<div class="bg-white rounded-lg shadow-md p-6 w-full max-w-2xl mx-auto">
 			<table class="w-full">
 				<thead>
@@ -71,7 +84,6 @@
 				</tbody>
 			</table>
 
-			<!-- Total Section -->
 			<div class="mt-6 text-right">
 				<strong class="text-lg">Total:</strong> <span id="total" class="text-xl font-bold">
 					$<%=cart.calculateTotal(strategy)%>
@@ -79,12 +91,11 @@
 			</div>
 		</div>
 
-		<!-- Checkout Button -->
 		<div class="flex justify-center mt-8">
 			<form action="/coffeebreak/CartServlet" method="POST">
 				<input type="hidden" name="checkout" value="hhhh">
 				<input type="hidden" name="id_user" value="<%=(int) session.getAttribute("id_user")%>">
-				<button type="submit" class="px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+				<button type="submit" class="px-6 py-2 bg-gradient-to-r from-amber-700 to-amber-800 hover:from-amber-900 hover:to-amber-700 text-white font-bold rounded">
 					Check out
 				</button>
 			</form>

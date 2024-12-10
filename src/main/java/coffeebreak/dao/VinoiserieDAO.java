@@ -46,7 +46,6 @@ public class VinoiserieDAO implements Product {
                 pstmt.setInt(3,vinoiserie.getVentes());
                 pstmt.setString(4, vinoiserie.getImageUrl());
                 pstmt.executeUpdate();
-                System.out.println("Vinoiserie insérée : " + vinoiserie.getNom());
         }
     }
 
@@ -77,7 +76,6 @@ public class VinoiserieDAO implements Product {
             pstmt.setInt(1, newSales);
             pstmt.setInt(2, id);
             pstmt.executeUpdate();
-            System.out.println("Ventes mises à jour pour la vinoiserie avec ID : " + id);
     }
 
     @Override
@@ -90,11 +88,10 @@ public class VinoiserieDAO implements Product {
             pstmt.setString(1, vinoiserie.getNom());
             pstmt.setFloat(2, vinoiserie.getPrix());
             pstmt.setInt(3, vinoiserie.getVentes());
-            pstmt.setInt(4, vinoiserie.getId());  // Use the ID of the cafe to identify the record to update
+            pstmt.setInt(4, vinoiserie.getId());  
 
             int rowsUpdated = pstmt.executeUpdate();
             if (rowsUpdated > 0) {
-                System.out.println("Café mis à jour : " + vinoiserie.getNom());
             } else {
                 System.out.println("Aucun café trouvé avec l'ID : " + vinoiserie.getId());
             }
@@ -110,7 +107,6 @@ public class VinoiserieDAO implements Product {
         int rowsAffected = pstmt.executeUpdate();
 
         if (rowsAffected > 0) {
-            System.out.println("Café supprimé avec succès : " + id);
             return true;
         } else {
             System.out.println("Erreur lors de la suppression du café avec ID : " + id);
@@ -126,7 +122,7 @@ public class VinoiserieDAO implements Product {
         ResultSet rs = null;
         
         try {
-            conn = DriverManager.getConnection(URL, USER, PASSWORD); // Open connection
+            conn = DriverManager.getConnection(URL, USER, PASSWORD);
             String sql = "SELECT * FROM vinoiseries";
             stmt = conn.prepareStatement(sql);
             rs = stmt.executeQuery();
